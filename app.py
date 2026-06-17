@@ -29,7 +29,8 @@ Analisis Sentimen Program Makan Siang Gratis pada TikTok
 
 st.markdown("""
 <div class='sub'>
-Program Makan Siang Gratis pada TikTok<br>
+Sistem ini menganalisis sentimen masyarakat terhadap Program Makan Bergizi Gratis berdasarkan komentar yang dipublikasikan di TikTok menggunakan metode TF-IDF dan algoritma Logistic Regression.
+<br>
 
 </div>
 """, unsafe_allow_html=True)
