@@ -61,28 +61,35 @@ if prediksi:
         hasil = model.predict(vector)[0]
         prob = model.predict_proba(vector).max() * 100
 
-        st.markdown("## 📊 HASIL ANALISIS")
+        st.markdown("##  Hasil Analisis")
 
         if hasil == 2:
-            st.success("🟢 POSITIF")
+            st.success(" POSITIF")
             st.write("Komentar menunjukkan dukungan terhadap program.")
 
         elif hasil == 1:
-            st.error("🔴 NEGATIF")
+            st.error(" NEGATIF")
             st.write("Komentar mengandung opini negatif terhadap program.")
 
         elif hasil == 0:
-            st.warning("🟡 NETRAL")
+            st.warning(" NETRAL")
             st.write("Komentar bersifat informatif atau tidak menunjukkan kecenderungan sentimen yang kuat.")
 
         st.markdown("### Confidence Score")
 
-        st.progress(prob / 100)
-
-        st.markdown(
-            f"<p style='font-size:10px;'><b>{prob:.2f}%</b></p>",
-            unsafe_allow_html=True
-)
+        st.markdown(f"""
+            <div style="
+              padding:15px;
+              border-radius:10px;
+              background-color:#f0f2f6;
+              width:40%;
+              text-align:center;
+              margin-top:10px;
+          ">
+              <p style="margin:0; font-size:14px;"><b>Confidence Score</b></p>
+              <p style="margin:0; font-size:20px;"><b>{prob:.2f}</b></p>
+          </div>
+          """, unsafe_allow_html=True)
 
 # Footer
 st.markdown("---")
