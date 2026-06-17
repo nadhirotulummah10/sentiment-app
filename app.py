@@ -23,7 +23,7 @@ tfidf = joblib.load("tfidf.pkl")
 # Judul
 st.markdown("""
 <div class='title'>
-Analisis Sentimen
+Analisis Sentimen Program Makan Siang Gratis pada TikTok
 </div>
 """, unsafe_allow_html=True)
 
@@ -35,11 +35,10 @@ Program Makan Siang Gratis pada TikTok<br>
 """, unsafe_allow_html=True)
 
 # Input
-st.markdown("<div class='card'>", unsafe_allow_html=True)
 
 teks = st.text_area(
     "Masukkan komentar",
-    height=180,
+    height=150,
     placeholder="Contoh: Program ini sangat membantu masyarakat..."
 )
 
@@ -59,7 +58,7 @@ if prediksi:
         vector = tfidf.transform([teks])
 
         hasil = model.predict(vector)[0]
-        prob = model.predict_proba(vector).max() * 100
+        prob = model.predict_proba(vector).max() * 70
 
         st.markdown("## 📊 HASIL ANALISIS")
 
@@ -76,7 +75,7 @@ if prediksi:
             st.write("Komentar bersifat informatif atau tidak menunjukkan kecenderungan sentimen yang kuat.")
 
         st.markdown("### Tingkat Keyakinan")
-        st.progress(prob / 100)
+        st.progress(prob / 70)
         st.write(f"**{prob:.2f}%**")
 
 # Footer
