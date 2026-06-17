@@ -29,7 +29,7 @@ Analisis Sentimen Program Makan Siang Gratis pada TikTok
 
 st.markdown("""
 <div class='sub'>
-Sistem ini menganalisis sentimen masyarakat terhadap Program Makan Bergizi Gratis berdasarkan komentar yang dipublikasikan di TikTok menggunakan metode TF-IDF dan algoritma Logistic Regression.
+Sistem ini menganalisis sentimen masyarakat terhadap Program Makan Bergizi Gratis berdasarkan komentar di TikTok menggunakan metode TF-IDF dan algoritma Logistic Regression.
 <br>
 
 </div>
@@ -59,7 +59,7 @@ if prediksi:
         vector = tfidf.transform([teks])
 
         hasil = model.predict(vector)[0]
-        prob = model.predict_proba(vector).max() * 70
+        prob = model.predict_proba(vector).max() * 100
 
         st.markdown("## 📊 HASIL ANALISIS")
 
@@ -75,9 +75,14 @@ if prediksi:
             st.warning("🟡 NETRAL")
             st.write("Komentar bersifat informatif atau tidak menunjukkan kecenderungan sentimen yang kuat.")
 
-        st.markdown("### Tingkat Keyakinan")
+        st.markdown("### Confidence Score")
+
         st.progress(prob / 70)
-        st.write(f"**{prob:.2f}%**")
+
+        st.markdown(
+            f"<p style='font-size:14px;'><b>{prob:.2f}%</b></p>",
+            unsafe_allow_html=True
+)
 
 # Footer
 st.markdown("---")
