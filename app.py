@@ -1,31 +1,93 @@
+
 import streamlit as st
 import joblib
 
+# Konfigurasi Halaman
+st.set_page_config(
+    page_title="Analisis Sentimen",
+    page_icon="📊",
+    layout="centered"
+)
+
+# Load CSS
+def local_css(file_name):
+    with open(file_name) as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
+local_css("style.css")
+
+# Load Model
 model = joblib.load("model_sentimen.pkl")
 tfidf = joblib.load("tfidf.pkl")
 
-st.title("Analisis Sentimen")
+# Judul
+st.markdown("""
+<div class='title'>
+Analisis Sentimen
+</div>
+""", unsafe_allow_html=True)
 
-text = st.text_area("Masukkan teks")
+st.markdown("""
+<div class='sub'>
+Program Makan Siang Gratis pada TikTok<br>
+Metode TF-IDF + Logistic Regression
+</div>
+""", unsafe_allow_html=True)
 
-if st.button("Analisis"):
-    if text.strip() == "":
-        st.warning("Teks kosong")
+# Input
+st.markdown("<div class='card'>", unsafe_allow_html=True)
+
+teks = st.text_area(
+    "Masukkan komentar",
+    height=180,
+    placeholder="Contoh: Program ini sangat membantu masyarakat..."
+)
+
+prediksi = st.button("Analisis Sentimen")
+
+st.markdown("</div>", unsafe_allow_html=True)
+
+# Prediksi
+if prediksi:
+
+    if teks.strip() == "":
+        st.warning("Masukkan komentar terlebih dahulu.")
     else:
-        x = tfidf.transform([text])
-        pred = model.predict(x)[0]
-        proba = model.predict_proba(x)[0]
 
-        if pred == 0:
-            label = "Negatif"
-        elif pred == 1:
-            label = "Netral"
+        vector = tfidf.transform([teks])
+
+        hasil = model.predict(vector)[0]
+        prob = model.predict_proba(vector).max() * 100
+
+        st.markdown("<br>", unsafe_allow_html=True)
+
+        if hasil == "Positif":
+            warna = "#16a34a"
+
+        elif hasil == "Negatif":
+            warna = "#dc2626"
+
         else:
-            label = "Positif"
+            warna = "#f59e0b"
 
-        st.success(label)
+        st.markdown(f"""
+        <div class='result' style="border-left:8px solid {warna};">
+            <h2>{hasil}</h2>
+            <p><b>Tingkat Keyakinan:</b> {prob:.2f}%</p>
+        </div>
+        """, unsafe_allow_html=True)
 
-        st.write("Probabilitas:")
-        st.write(f"Negatif: {proba[0]*100:.2f}%")
-        st.write(f"Netral: {proba[1]*100:.2f}%")
-        st.write(f"Positif: {proba[2]*100:.2f}%")
+        st.progress(prob/100)
+
+# Footer
+st.markdown("---")
+
+st.caption("""
+Sistem Analisis Sentimen Program Makan Siang Gratis pada TikTok
+
+Metode:
+- TF-IDF
+- Logistic Regression
+
+© 2026
+""")
