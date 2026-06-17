@@ -86,7 +86,6 @@ if prediksi:
               text-align:center;
               margin-top:10px;
           ">
-              <p style="margin:0; font-size:14px;"><b>Confidence Score</b></p>
               <p style="margin:0; font-size:20px;"><b>{prob:.2f}</b></p>
           </div>
           """, unsafe_allow_html=True)
