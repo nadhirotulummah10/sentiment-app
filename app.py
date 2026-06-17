@@ -30,7 +30,7 @@ Analisis Sentimen
 st.markdown("""
 <div class='sub'>
 Program Makan Siang Gratis pada TikTok<br>
-Metode TF-IDF + Logistic Regression
+
 </div>
 """, unsafe_allow_html=True)
 
@@ -48,10 +48,12 @@ prediksi = st.button("Analisis Sentimen")
 st.markdown("</div>", unsafe_allow_html=True)
 
 # Prediksi
+# Prediksi
 if prediksi:
 
     if teks.strip() == "":
         st.warning("Masukkan komentar terlebih dahulu.")
+
     else:
 
         vector = tfidf.transform([teks])
@@ -59,25 +61,23 @@ if prediksi:
         hasil = model.predict(vector)[0]
         prob = model.predict_proba(vector).max() * 100
 
-        st.markdown("<br>", unsafe_allow_html=True)
+        st.markdown("## 📊 HASIL ANALISIS")
 
-        if hasil == "Positif":
-            warna = "#16a34a"
+        if hasil == 2:
+            st.success("🟢 POSITIF")
+            st.write("Komentar menunjukkan dukungan terhadap program.")
 
-        elif hasil == "Negatif":
-            warna = "#dc2626"
+        elif hasil == 1:
+            st.error("🔴 NEGATIF")
+            st.write("Komentar mengandung opini negatif terhadap program.")
 
-        else:
-            warna = "#f59e0b"
+        elif hasil == 0:
+            st.warning("🟡 NETRAL")
+            st.write("Komentar bersifat informatif atau tidak menunjukkan kecenderungan sentimen yang kuat.")
 
-        st.markdown(f"""
-        <div class='result' style="border-left:8px solid {warna};">
-            <h2>{hasil}</h2>
-            <p><b>Tingkat Keyakinan:</b> {prob:.2f}%</p>
-        </div>
-        """, unsafe_allow_html=True)
-
-        st.progress(prob/100)
+        st.markdown("### Tingkat Keyakinan")
+        st.progress(prob / 100)
+        st.write(f"**{prob:.2f}%**")
 
 # Footer
 st.markdown("---")
@@ -85,9 +85,6 @@ st.markdown("---")
 st.caption("""
 Sistem Analisis Sentimen Program Makan Siang Gratis pada TikTok
 
-Metode:
-- TF-IDF
-- Logistic Regression
 
 © 2026
 """)
