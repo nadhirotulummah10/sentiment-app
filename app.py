@@ -77,10 +77,10 @@ if prediksi:
 
         st.markdown("### Confidence Score")
 
-        st.progress(prob / 70)
+        st.progress(prob / 100)
 
         st.markdown(
-            f"<p style='font-size:14px;'><b>{prob:.2f}%</b></p>",
+            f"<p style='font-size:10px;'><b>{prob:.2f}%</b></p>",
             unsafe_allow_html=True
 )
 
